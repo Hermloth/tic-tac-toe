@@ -5,6 +5,9 @@
 
 body{
 margin: 0px;
+display: grid;
+grid-template-rows: 1fr 1fr 8fr 1fr;
+height: 100vh;
 }
 
 .headerContainer{
@@ -19,8 +22,43 @@ margin: 0px;
     background-color: var(--player-background);
     margin: 0px;
     padding: 5px;
-
+    display: grid;
+    grid-template-columns: 4fr 4fr 1fr;
 }
+
+#resetBoard{
+    padding: 3px;
+}
+
+.player1StatsContainer,
+.player2StatsContainer{
+    border: 1px solid lightgray;
+    background-color: lightgray;
+    border-radius: 5px;
+    margin: 5px;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    padding: 5px;
+}
+
+.playerLabel{
+    font-weight: 800;
+}
+
+.addPlayerButton{
+    padding: 3px;
+    border-radius: 3px;
+    grid-area: 1 / 1 / 2 /3;
+}
+
+.resetBoardContainer{
+    display: flex;
+    align-content: center;
+    justify-content: end;
+}
+
  h1{
     margin: 0px;
     padding: 0px;
@@ -34,4 +72,36 @@ margin: 0px;
  p{
     margin: 0px;
     padding: 5px;
+ }
+
+ .boardCell{
+    height: 30px;
+    width: 30px;
+    border: 2px solid black;
+ }
+
+ .boardRow{
+    display: flex;    
+ }
+
+ .gameBoard{
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    align-content: center;
+    justify-content: center;
+ }
+
+ .playerTurnContainer{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding-top: 8px;
+ }
+
+ .playTurnDisplay, 
+ .winnerDisplay{
+    display: flex;
+    align-content: center;
+    justify-content: center;
  }

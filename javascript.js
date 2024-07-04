@@ -1,4 +1,10 @@
 
+var activePlayer = 0;
+const winnerDisplay = document.querySelector(".winnerDisplay");
+const turnDisplay = document.querySelector(".playerTurnDisplay");
+var gameState = 0;
+
+
 function RefreshPlayerStats(){
 // if player 1 existis set up frame
 if(playerArray[0] != null){
@@ -11,8 +17,14 @@ if(playerArray[0] != null){
     player1Container.replaceChildren();
     let player1Label = document.createElement("div");
     player1Label.classList.add("playerLabel");
-    player1Label.textContent = playerArray[0].getName() + " (Player1)";
+    player1Label.textContent = playerArray[0].getName() + " (Player1) - X's";
     player1Container.appendChild(player1Label);
+    
+    let playerScoreLabel = document.createElement("div");
+    playerScoreLabel.classList.add("playerScore");
+    playerScoreLabel.textContent = "Score: "+ playerArray[0].getScore();
+    player1Container.appendChild(playerScoreLabel);
+
 }
 if (playerArray[1] != null){
 
@@ -25,31 +37,79 @@ if (playerArray[1] != null){
     player2Container.replaceChildren();
     let player2Label = document.createElement("div");
     player2Label.classList.add("playerLabel");
-    player2Label.textContent = playerArray[1].getName() + " (Player2)";
+    player2Label.textContent = playerArray[1].getName() + " (Player2) - O's";
     console.log(player2Label);
     player2Container.appendChild(player2Label);
     console.log(player2Container);
+
+    let playerScoreLabel = document.createElement("div");
+    playerScoreLabel.classList.add("playerScore");
+    playerScoreLabel.textContent = "Score: "+ playerArray[1].getScore();
+    player2Container.appendChild(playerScoreLabel);
 }
 }
 
 const resetButton = document.querySelector(".resetBoardButton");
-resetButton.addEventListener("click", () => {
-    let gameBoard = document.querySelector(".gameBoard");
-    gameBoard.replaceChildren();
-    let cellNumber = 1
-    for (let r=0; r<3; r++){
-    let row = document.createElement("div");
-    row.classList.add("boardRow")
-    for (let i = 1; i<4; i++){
-        let gameCell = document.createElement("div");
-        gameCell.id = "gameCell" + cellNumber;
-        gameCell.classList.add("boardCell")
-        row.appendChild(gameCell);
-        cellNumber++;
+resetButton.addEventListener("click", ResetBoard);
+
+function ResetBoard(){
+    console.log("reset called");
+        let gameBoard = document.querySelector(".gameBoard");
+        gameBoard.replaceChildren();
+        let cellNumber = 0
+        for (let r=0; r<3; r++){
+        let row = document.createElement("div");
+        row.classList.add("boardRow")
+        for (let i = 1; i<4; i++){
+            let gameCell = document.createElement("div");
+            gameCell.id = cellNumber;
+            gameCell.classList.add("boardCell")
+            gameCell.addEventListener("click", () => {
+
+                if (gameCell.textContent != ""){
+                    alert("Space already taken, choose another");
+                } else if (playerArray.length < 2){
+                    alert("not enough players, add some first");
+                } else if (gameState == 1){
+                    alert("The game is over, start a new one");
+                } else {
+                if (activePlayer == 0){
+                    gameCell.textContent = "X";
+                    gameState[gameCell.id] = "X";
+                    evaluateGame(gameState);
+                    activePlayer = 1;
+                    updateActivePlayer();
+                } else {
+                    gameCell.textContent = "O";
+                    gameState[gameCell.id] = "O";
+                    evaluateGame(gameState);
+                    activePlayer = 0;
+                    updateActivePlayer();
+                }
+            }
+            })
+    
+            function updateActivePlayer(){
+                if (playerArray.length>0){
+                if(activePlayer == 0){
+                    turnDisplay.textContent = playerArray[0].getName() + "'s Turn.";
+                } else {
+                    turnDisplay.textContent = playerArray[1].getName() + "'s Turn.";
+                }
+            }
+            }
+    
+            row.appendChild(gameCell);
+            cellNumber++;
+        }
+        gameBoard.appendChild(row);
+        gameState = ["","","","","","","","",""];
+        winnerDisplay.textContent = "";
+        activePlayer = 0;
+        updateActivePlayer();
     }
-    gameBoard.appendChild(row);
+    
 }
-})
 
 var gameState = [   "", "", "",
                     "", "", "",
@@ -57,43 +117,46 @@ var gameState = [   "", "", "",
 
 function evaluateGame (gameStateArray) {
     function evaluateRows(){
-        if (gameState[0] == gameState[1] && gameState [0] && gameState[2] && gameState[0] != ""){
+        if (gameState[0] == gameState[1] && gameState [0] == gameState[2] && gameState[0] != "" && gameState[1] != ""){
             console.log("row 1 match")
-            // ADD WIN FUCNTION
+            winMessage();
         }
-        if (gameState[3] == gameState[4] && gameState [3] && gameState[5] && gameState[3] != ""){
+        if (gameState[3] == gameState[4] && gameState [3] == gameState[5] && gameState[3] != "" && gameState[4] != ""){
             console.log("row 2 match")
-            // ADD WIN FUCNTION
+            winMessage();
         }
-        if (gameState[6] == gameState[7] && gameState [6] && gameState[8] && gameState[6] != ""){
+        if (gameState[6] == gameState[7] && gameState [6] == gameState[8] && gameState[6] != "" && gameState[7] != ""){
             console.log("row 3 match")
-            // ADD WIN FUCNTION
+            winMessage();
         }
     }
 
+//SCORING BORKEN AND NEEDS SOME LOGIC WORK
+
+
     function evaluateColumns (){
-        if (gameState[0] == gameState[3] && gameState [0] && gameState[6] && gameState[0] != ""){
+        if (gameState[0] == gameState[3] && gameState [0] == gameState[6] && gameState[0] != "" && gameState[3] != ""){
             console.log("column 1 match")
-            // ADD WIN FUCNTION
+            winMessage();
         }
-        if (gameState[1] == gameState[4] && gameState [1] && gameState[7] && gameState[1] != ""){
+        if (gameState[1] == gameState[4] && gameState [1] == gameState[7] && gameState[1] != "" && gameState[4] != ""){
             console.log("column 2 match")
-            // ADD WIN FUCNTION
+            winMessage();
         }
-        if (gameState[2] == gameState[5] && gameState [2] && gameState[8] && gameState[2] != ""){
+        if (gameState[2] == gameState[5] && gameState [2] == gameState[8] && gameState[2] != "" && gameState[5] != ""){
             console.log("column 3 match")
-            // ADD WIN FUCNTION
+            winMessage();
         }
     }
 
     function evaluateDiagonals (){
-        if (gameState[0] == gameState[4] && gameState [0] && gameState[8] && gameState[0] != ""){
+        if (gameState[0] == gameState[4] && gameState [0] == gameState[8] && gameState[0] != "" && gameState[4] != ""){
             console.log("Diagonal 1 match")
-            // ADD WIN FUCNTION
+            winMessage();
         }
-        if (gameState[2] == gameState[4] && gameState [2] && gameState[6] && gameState[2] != ""){
+        if (gameState[2] == gameState[4] && gameState [2] == gameState[6] && gameState[2] != "" && gameState[4] != ""){
             console.log("Diagonal 2 match")
-            // ADD WIN FUCNTION
+            winMessage();
         }
     }
 
@@ -101,7 +164,20 @@ function evaluateGame (gameStateArray) {
         if (gameState.includes("") == false){
             alert("End of game");
         }
-    };
+    }
+
+    function winMessage () {
+       if (activePlayer == 1){
+            winnerDisplay.textContent = playerArray[1].getName() + " Wins!";
+            playerArray[1].increaseScore();
+            RefreshPlayerStats();
+       } else {
+        winnerDisplay.textContent = playerArray[0].getName() + " Wins!";
+        playerArray[0].increaseScore();
+        RefreshPlayerStats();
+       }
+       gameState = 1;
+    }
 
     evaluateRows();
     evaluateColumns();
@@ -110,33 +186,16 @@ function evaluateGame (gameStateArray) {
     console.log("Evaluation Complete");
 }
 
-
-
-
-
-
-//-------------------------------------
-// Test Section Only (Comment out when not needed)
+//Main Code
 let playerArray = [];
-playerArray.push(createPlayer("Matt"));
-let player1 = playerArray[0];
-console.log("Test Player 1 "+player1.getName() +" Initialised");
+//Test Section Only (Comment out when not needed)
+//playerArray.push(createPlayer("Matt"));
+//let player1 = playerArray[0];
+//console.log("Test Player 1 "+player1.getName() +" Initialised");
+//------------------------------------------------
 RefreshPlayerStats();
+ResetBoard();
 
-gameState[0] = "X";
-gameState[1] = "X";
-gameState[2] = "X";
-gameState[3] = "X";
-gameState[4] = "X";
-gameState[5] = "X";
-gameState[6] = "X";
-gameState[7] = "X";
-gameState[8] = "X";
-
-
-//-------------------------------------
-
-// Solution
 function createPlayer (name){
     const playerName = name;
     let score = 0;

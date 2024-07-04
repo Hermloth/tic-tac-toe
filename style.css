@@ -1,0 +1,37 @@
+:root{
+--primary-color: #001f2b;
+--player-background: #BDBDBD;
+}
+
+body{
+margin: 0px;
+}
+
+.headerContainer{
+    background-color: var(--primary-color);
+    color: white;
+    margin: 0px;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.playerConfigContainer{
+    background-color: var(--player-background);
+    margin: 0px;
+    padding: 5px;
+
+}
+ h1{
+    margin: 0px;
+    padding: 0px;
+ }
+ .pageFooterContainer{
+    background-color: var(--primary-color);
+    color: white;
+    margin: 0px;
+ }
+
+ p{
+    margin: 0px;
+    padding: 5px;
+ }

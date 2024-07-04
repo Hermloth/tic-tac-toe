@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="javascript.js" defer></script>
+</head>
+<body>
+<!--Page Header-->
+<div class="headerContainer">
+<h1 class="pageTitle">Tic Tac Toe</h1>
+</div>
+<!--Player Config Area-->
+<div class="playerConfigContainer">
+    <div class="player1StatsContainer" id="player1StatsContainer">
+        <button id="addPlayer1Button" class="addPlayerButton" onclick="launchPlayerDialog()">Add Player</button>
+    </div>
+    <div class="player2StatsContainer" id="player2StatsContainer">
+        <button id="addPlayer2Button" class="addPlayerButton" onclick="launchPlayerDialog()">Add Player</button>
+    </div>
+    <div class="resetBoardContainer">
+        <button id="resetBoard" class="resetBoardButton">Reset Board</button>
+    </div>
+
+</div>
+
+<!--Main play area-->
+<div class="playAreaContainer">
+    <div class="playerTurnContainer">
+        <p class="playerTurnDisplay">Sample Player Turn</p>
+    </div>
+<div class="gameBoard">
+    <div class="boardRow">
+        <div class="boardCell"></div>
+        <div class="boardCell"></div>
+        <div class="boardCell"></div>
+    </div>
+    <div class="boardRow">
+        <div class="boardCell"></div>
+        <div class="boardCell"></div>
+        <div class="boardCell"></div>
+    </div>
+    <div class="boardRow">
+        <div class="boardCell"></div>
+        <div class="boardCell"></div>
+        <div class="boardCell"></div>
+    </div>
+</div>
+<div class="winnerDisplayContainer">
+    <h1 class="winnerDisplay">Sample Winner</h1>
+</div>
+
+
+</div>
+<!--Page Footer-->
+<div class="pageFooterContainer">
+    <p class="footerText">This is not a real web page, this is a page created as part
+        of an assignment for the odin project as a student.</p>
+</div>
+
+
+<dialog id="playerDialog">
+    <form id="newPlayerForm">
+        <label for="diagname">Name:</label>
+        <input type="text" id="diagname">
+        <button type="submit">Add Player</button>
+    </form>
+</dialog>
+</body>
+</html>

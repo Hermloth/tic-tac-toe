@@ -2,7 +2,7 @@
 var activePlayer = 0;
 const winnerDisplay = document.querySelector(".winnerDisplay");
 const turnDisplay = document.querySelector(".playerTurnDisplay");
-var gameState = 0;
+var gameActive = 0;
 
 
 function RefreshPlayerStats(){
@@ -38,9 +38,7 @@ if (playerArray[1] != null){
     let player2Label = document.createElement("div");
     player2Label.classList.add("playerLabel");
     player2Label.textContent = playerArray[1].getName() + " (Player2) - O's";
-    console.log(player2Label);
     player2Container.appendChild(player2Label);
-    console.log(player2Container);
 
     let playerScoreLabel = document.createElement("div");
     playerScoreLabel.classList.add("playerScore");
@@ -70,7 +68,7 @@ function ResetBoard(){
                     alert("Space already taken, choose another");
                 } else if (playerArray.length < 2){
                     alert("not enough players, add some first");
-                } else if (gameState == 1){
+                } else if (gameActive == 1){
                     alert("The game is over, start a new one");
                 } else {
                 if (activePlayer == 0){
@@ -107,6 +105,7 @@ function ResetBoard(){
         winnerDisplay.textContent = "";
         activePlayer = 0;
         updateActivePlayer();
+        gameActive = 0;
     }
     
 }
@@ -117,15 +116,15 @@ var gameState = [   "", "", "",
 
 function evaluateGame (gameStateArray) {
     function evaluateRows(){
-        if (gameState[0] == gameState[1] && gameState [0] == gameState[2] && gameState[0] != "" && gameState[1] != ""){
+        if (gameState[0] == gameState[1] && gameState [0] == gameState[2] && gameState[0] != "" && gameState[1] != "" && gameState[2] != ""){
             console.log("row 1 match")
             winMessage();
         }
-        if (gameState[3] == gameState[4] && gameState [3] == gameState[5] && gameState[3] != "" && gameState[4] != ""){
+        if (gameState[3] == gameState[4] && gameState [3] == gameState[5] && gameState[3] != "" && gameState[4] != "" && gameState[5] != ""){
             console.log("row 2 match")
             winMessage();
         }
-        if (gameState[6] == gameState[7] && gameState [6] == gameState[8] && gameState[6] != "" && gameState[7] != ""){
+        if (gameState[6] == gameState[7] && gameState [6] == gameState[8] && gameState[6] != "" && gameState[7] != "" && gameState[8] != ""){
             console.log("row 3 match")
             winMessage();
         }
@@ -135,26 +134,26 @@ function evaluateGame (gameStateArray) {
 
 
     function evaluateColumns (){
-        if (gameState[0] == gameState[3] && gameState [0] == gameState[6] && gameState[0] != "" && gameState[3] != ""){
+        if (gameState[0] == gameState[3] && gameState [0] == gameState[6] && gameState[0] != "" && gameState[3] != "" && gameState[6] != ""){
             console.log("column 1 match")
             winMessage();
         }
-        if (gameState[1] == gameState[4] && gameState [1] == gameState[7] && gameState[1] != "" && gameState[4] != ""){
+        if (gameState[1] == gameState[4] && gameState [1] == gameState[7] && gameState[1] != "" && gameState[4] != "" && gameState[7] != ""){
             console.log("column 2 match")
             winMessage();
         }
-        if (gameState[2] == gameState[5] && gameState [2] == gameState[8] && gameState[2] != "" && gameState[5] != ""){
+        if (gameState[2] == gameState[5] && gameState [2] == gameState[8] && gameState[2] != "" && gameState[5] != "" && gameState[8] != ""){
             console.log("column 3 match")
             winMessage();
         }
     }
 
     function evaluateDiagonals (){
-        if (gameState[0] == gameState[4] && gameState [0] == gameState[8] && gameState[0] != "" && gameState[4] != ""){
+        if (gameState[0] == gameState[4] && gameState [0] == gameState[8] && gameState[0] != "" && gameState[4] != "" && gameState[8] != ""){
             console.log("Diagonal 1 match")
             winMessage();
         }
-        if (gameState[2] == gameState[4] && gameState [2] == gameState[6] && gameState[2] != "" && gameState[4] != ""){
+        if (gameState[2] == gameState[4] && gameState [2] == gameState[6] && gameState[2] != "" && gameState[4] != "" && gameState[6] != ""){
             console.log("Diagonal 2 match")
             winMessage();
         }
@@ -176,14 +175,13 @@ function evaluateGame (gameStateArray) {
         playerArray[0].increaseScore();
         RefreshPlayerStats();
        }
-       gameState = 1;
+       gameActive = 1;
     }
 
     evaluateRows();
     evaluateColumns();
     evaluateDiagonals();
     evaluateEndGame();
-    console.log("Evaluation Complete");
 }
 
 //Main Code
@@ -222,9 +220,7 @@ function createPlayer (name){
     
     
     playerDialog.addEventListener("submit", (e) => {
-        e.preventDefault();
-        console.log("playerformsubmitted")
-    
+        e.preventDefault();    
     
         if(playerArray[0] == null){
             let playername = document.getElementById("diagname").value;
